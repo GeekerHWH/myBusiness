@@ -2,7 +2,9 @@ package database
 
 import (
 	"fmt"
+	"os"
 
+	"github.com/jedib0t/go-pretty/v6/table"
 	"gorm.io/gorm"
 )
 
@@ -52,10 +54,13 @@ func PrintAll(db *gorm.DB) {
 		panic("failed to select records")
 	}
 
-	// Print all records
-	fmt.Println()
-	fmt.Printf("商品名称\t二手均值\t折价率\n")
+	t := table.NewWriter()
+	t.SetOutputMirror(os.Stdout)
+	t.AppendHeader(table.Row{"#", "商品名称", "一手现货", "二手均值", "折价率"})
 	for _, good := range goods {
-		fmt.Printf("%s\t%.4f\t%.4f\n", good.Name, good.NewPrice, good.DiscountRate)
+		t.AppendRows([]table.Row{{good.ID, good.Name, good.NewPrice, good.NewPrice * good.DiscountRate, good.DiscountRate}})
 	}
+	t.AppendSeparator()
+	t.AppendFooter(table.Row{"", "", "End", ""})
+	t.Render()
 }
