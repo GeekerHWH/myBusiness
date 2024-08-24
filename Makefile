@@ -1,7 +1,7 @@
 # Target operating system and architecture
 GOOS=darwin
 GOARCH=arm64
-OUTPUT=myBusiness # Output file name
+OUTPUT=busy # Output file name
 LDFLAGS=-s -w # Go build flags
 
 # Default target
@@ -11,6 +11,7 @@ all: build
 build: main.go
 	@echo "Building..."
 	@GOOS=$(GOOS) GOARCH=$(GOARCH) go build -ldflags="$(LDFLAGS)" -o $(OUTPUT) main.go
+	@chmod u+x ./$(OUTPUT)
 
 # Clean target
 clean:

@@ -2,4 +2,5 @@
 myBusiness.db
 
 # binary
-myBusiness
+busy
+./bin/*
